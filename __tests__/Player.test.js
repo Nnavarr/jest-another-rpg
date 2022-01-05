@@ -60,7 +60,39 @@ test("subtracts from player's health", () => {
     expect(player.health).toBe(oldHealth - 5);
     player.reduceHealth(99999);
     expect(player.health).toBe(0);
-    
+
+})
+
+// get players attack value
+test("get player's attack value", () =>{
+    const player = new Player('Dave');
+    player.strength = 10;
+
+    expect(player.getAttackValue()).toBeGreaterThanOrEqual(5);
+    expect(player.getAttackValue()).toBeLessThanOrEqual(15);
+
+})
+
+// check potion was added correctly
+test('adds a potion to the inventory', () => {
+    const player = new Player('Dave');
+    const oldCount = player.inventory.length;
+
+    // add potion and check to ensure the inventory actually grew
+    player.addPotion(new Potion());
+    expect(player.inventory.length).toBeGreaterThan(oldCount);
+
+})
+
+// check to ensure the correct potion is used and stats applied
+test('uses a potion from inventory', () =>{
+    const player = new Player('Dave');
+    player.inventory = [new Potion(), new Potion(), new Potion()];
+    const oldCount = player.inventory.length;
+
+    player.usePotion(1);
+
+    expect(player.inventory.length).toBeLessThan(oldCount);
 })
 
 jest.mock('../lib/Potion');
